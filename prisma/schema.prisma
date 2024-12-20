@@ -1,0 +1,41 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model TotalDiario {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  data        String @unique // Data do dia
+  totalVendas Float    @default(0)
+  updated_at DateTime @updatedAt
+
+  @@map("totais_diarios") // Nome da coleção no MongoDB
+}
+
+model Venda {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  descricao   String
+  valor       Float
+  dataVenda   String
+  created_at DateTime @default(now())
+
+  @@map("vendas") // Nome da coleção no MongoDB
+}
+
+model Caixa {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  saldoTotal      Float
+  updated_at DateTime @updatedAt
+
+  @@map("caixa") // Nome da coleção no MongoDB
+}
