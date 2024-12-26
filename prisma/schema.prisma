@@ -39,3 +39,12 @@ model Caixa {
 
   @@map("caixa") // Nome da coleção no MongoDB
 }
+
+model Usuario {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  email       String
+  password   String
+  created_at DateTime @default(now())
+
+  @@map("usuario")
+}
